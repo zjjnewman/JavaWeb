@@ -17,13 +17,16 @@ public class JdbcUtils {
         try {
             Properties properties = new Properties();
             // 读取 jdbc.properties 属性配置文件
+            /**
+             * InputStream inputStream = ClassLoader.getSystemResourceAsStream("jdbc.properties")
+             * 这里被这句代码坑了，以后就用下面的形式获取加载器
+             */
             InputStream inputStream = JdbcUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
-            //从流中加载数据
+                    //从流中加载数据
             properties.load(inputStream);
             //创建 数据库连接池
             dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
 
-//            System.out.println(dataSource.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,10 +40,11 @@ public class JdbcUtils {
 
         try {
             conn = dataSource.getConnection();
+            return conn;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return conn;
+        return null;
     }
 
     /**
@@ -49,7 +53,6 @@ public class JdbcUtils {
      */
     public static void close(Connection conn){
         if (conn != null){
-
             try {
                 conn.close();
             } catch (SQLException e) {
