@@ -64,7 +64,7 @@ public abstract class BaseDao {
     public <T> List<T> queryForList(Class<T> type, String sql, Object ...args){
         Connection connection = JdbcUtils.getConnection();
         try {
-            queryRunner.query(connection, sql, new BeanListHandler<T>(type), args);
+            return queryRunner.query(connection, sql, new BeanListHandler<T>(type), args);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -28,12 +28,19 @@
         <servlet-name>userServlet</servlet-name>
         <servlet-class>com.atguigu.web.UserServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
         <url-pattern>/userServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>bookServlet</servlet-name>
+        <servlet-class>com.atguigu.web.BookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>bookServlet</servlet-name>
+        <url-pattern>/manager/bookServlet</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>
