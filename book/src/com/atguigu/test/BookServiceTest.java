@@ -37,4 +37,9 @@ class BookServiceTest {
     void queryBooks() {
         bookService.queryBooks().forEach(System.out::println);
     }
+
+    @Test
+    void page(){
+        System.out.println(bookService.page(1, 4));
+    }
 }

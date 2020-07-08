@@ -14,6 +14,7 @@ import java.io.IOException;
 /**
  * @author jin
  */
+@Deprecated
 public class LoginServlet extends HttpServlet {
 
     UserService userService =  new UserServiceImpl();

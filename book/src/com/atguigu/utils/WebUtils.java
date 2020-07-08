@@ -43,6 +43,20 @@ public class WebUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 把字符串转为int
+     * @param strInt
+     * @param defaultValue
+     * @return
+     */
+    public static int parseInt(String strInt, int defaultValue){
+        try{
+            return Integer.parseInt(strInt);
+        }catch (Exception e){
+            System.out.println("WebUtils.parseInt(): NumberFormatException");
+        }
+        return defaultValue;
     }
 }

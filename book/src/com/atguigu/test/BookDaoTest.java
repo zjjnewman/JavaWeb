@@ -40,4 +40,14 @@ class BookDaoTest {
     void queryBooks() {
         bookDao.queryBooks().forEach(System.out::println);
     }
+    @Test
+    void queryPageTotalCount() {
+        System.out.println(bookDao.queryPageTotalCount());
+    }
+
+    @Test
+    void queryForPageItems() {
+        bookDao.queryForPageItems(11, 5).forEach(System.out::println);
+    }
+
 }

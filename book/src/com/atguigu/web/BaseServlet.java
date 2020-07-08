@@ -10,6 +10,11 @@ import java.lang.reflect.Method;
 public abstract class BaseServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // 优化 1 if else ，缺点，每来一个业务就要判断一次，考虑用反射
@@ -23,8 +28,7 @@ public abstract class BaseServlet extends HttpServlet {
         // 优化2 用反射方式获取业务
         String action = req.getParameter("action");
         try {
-            Method method = UserServlet.class.getDeclaredMethod(action,
-                    HttpServletRequest.class, HttpServletResponse.class);
+            Method method = this.getClass().getDeclaredMethod(action, HttpServletRequest.class, HttpServletResponse.class);
             method.invoke(this, req, resp);
         } catch (Exception e) {
             e.printStackTrace();

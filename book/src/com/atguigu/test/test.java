@@ -19,10 +19,8 @@ public class test {
     @Test
     public void test(){
 
-        Map<String, String> map =  new HashMap<>();
-        map.put("username", "dasf");
-        System.out.println(map);
-        System.out.println(map.get("username"));
+        Object o = 1;
+        System.out.println((Integer) o);
 
     }
     public void mod(o o){

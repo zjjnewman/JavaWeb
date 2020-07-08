@@ -13,6 +13,7 @@ import java.io.IOException;
 /**
  * @author jin
  */
+@Deprecated
 public class RegisterServlet extends HttpServlet {
 
     /**
