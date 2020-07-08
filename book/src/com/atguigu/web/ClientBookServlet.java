@@ -23,7 +23,7 @@ public class ClientBookServlet extends BaseServlet {
      * @throws IOException
      */
     protected void page(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("经过了前台的BookServlet程序");
+        System.out.println("经过了前台的ClientBookServlet程序");
 
         // 1.获取请求参数pageNo pageSize
         int pageNo = WebUtils.parseInt(req.getParameter("pageNo"), 1);

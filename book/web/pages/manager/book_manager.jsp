@@ -90,11 +90,7 @@
 				<c:when test="${requestScope.page.pageTotal <= 5 }">
 					<c:set var="begin" value="1"/>
 					<c:set var="end" value="${requestScope.page.pageTotal}"/>
-
-
 				</c:when>
-
-
 <%--				情况2 总页码大于5--%>
 				<c:when test="${requestScope.page.pageTotal > 5 }">
 					<c:choose>
@@ -102,9 +98,7 @@
 						<c:when test="${requestScope.page.pageNo <= 3 }">
 							<c:set var="begin" value="1"/>
 							<c:set var="end" value="5"/>
-
 						</c:when>
-
 						<%--					小情况2--%>
 						<c:when test="${requestScope.page.pageNo > requestScope.page.pageTotal - 3 }">
 							<c:set var="begin" value="${requestScope.page.pageTotal - 4}"/>
@@ -126,9 +120,6 @@
 					<a href="manager/bookServlet?action=page&pageNo=${i}">${i}</a>
 				</c:if>
 			</c:forEach>
-
-
-
 			<%--	当前页码的前后页码 结束--%>
 
 	<%--	小于末页才显示	--%>

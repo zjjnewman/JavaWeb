@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -34,141 +35,118 @@
 					您刚刚将<span style="color: red">时间简史</span>加入到了购物车中
 				</div>
 			</div>
-			<div class="b_list">
-				<div class="img_div">
-					<img class="book_img" alt="" src="static/img/default.jpg" />
-				</div>
-				<div class="book_info">
-					<div class="book_name">
-						<span class="sp1">书名:</span>
-						<span class="sp2">时间简史</span>
+
+<%--			对图书列表遍历--%>
+			<c:forEach items="${requestScope.page.items}" var="book">
+				<div class="b_list">
+					<div class="img_div">
+						<img class="book_img" alt="" src="${book.imgPath}" />
 					</div>
-					<div class="book_author">
-						<span class="sp1">作者:</span>
-						<span class="sp2">霍金</span>
-					</div>
-					<div class="book_price">
-						<span class="sp1">价格:</span>
-						<span class="sp2">￥30.00</span>
-					</div>
-					<div class="book_sales">
-						<span class="sp1">销量:</span>
-						<span class="sp2">230</span>
-					</div>
-					<div class="book_amount">
-						<span class="sp1">库存:</span>
-						<span class="sp2">1000</span>
-					</div>
-					<div class="book_add">
-						<button>加入购物车</button>
-					</div>
-				</div>
-			</div>
-			
-			<div class="b_list">
-				<div class="img_div">
-					<img class="book_img" alt="" src="static/img/default.jpg" />
-				</div>
-				<div class="book_info">
-					<div class="book_name">
-						<span class="sp1">书名:</span>
-						<span class="sp2">时间简史</span>
-					</div>
-					<div class="book_author">
-						<span class="sp1">作者:</span>
-						<span class="sp2">霍金</span>
-					</div>
-					<div class="book_price">
-						<span class="sp1">价格:</span>
-						<span class="sp2">￥30.00</span>
-					</div>
-					<div class="book_sales">
-						<span class="sp1">销量:</span>
-						<span class="sp2">230</span>
-					</div>
-					<div class="book_amount">
-						<span class="sp1">库存:</span>
-						<span class="sp2">1000</span>
-					</div>
-					<div class="book_add">
-						<button>加入购物车</button>
+					<div class="book_info">
+						<div class="book_name">
+							<span class="sp1">书名:</span>
+							<span class="sp2">${book.name}</span>
+						</div>
+						<div class="book_author">
+							<span class="sp1">作者:</span>
+							<span class="sp2">${book.author}</span>
+						</div>
+						<div class="book_price">
+							<span class="sp1">价格:</span>
+							<span class="sp2">￥${book.price}</span>
+						</div>
+						<div class="book_sales">
+							<span class="sp1">销量:</span>
+							<span class="sp2">${book.sales}</span>
+						</div>
+						<div class="book_amount">
+							<span class="sp1">库存:</span>
+							<span class="sp2">${book.stock}</span>
+						</div>
+						<div class="book_add">
+							<button>加入购物车</button>
+						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="b_list">
-				<div class="img_div">
-					<img class="book_img" alt="" src="static/img/default.jpg" />
-				</div>
-				<div class="book_info">
-					<div class="book_name">
-						<span class="sp1">书名:</span>
-						<span class="sp2">时间简史</span>
-					</div>
-					<div class="book_author">
-						<span class="sp1">作者:</span>
-						<span class="sp2">霍金</span>
-					</div>
-					<div class="book_price">
-						<span class="sp1">价格:</span>
-						<span class="sp2">￥30.00</span>
-					</div>
-					<div class="book_sales">
-						<span class="sp1">销量:</span>
-						<span class="sp2">230</span>
-					</div>
-					<div class="book_amount">
-						<span class="sp1">库存:</span>
-						<span class="sp2">1000</span>
-					</div>
-					<div class="book_add">
-						<button>加入购物车</button>
-					</div>
-				</div>
-			</div>
-			
-			<div class="b_list">
-				<div class="img_div">
-					<img class="book_img" alt="" src="static/img/default.jpg" />
-				</div>
-				<div class="book_info">
-					<div class="book_name">
-						<span class="sp1">书名:</span>
-						<span class="sp2">时间简史</span>
-					</div>
-					<div class="book_author">
-						<span class="sp1">作者:</span>
-						<span class="sp2">霍金</span>
-					</div>
-					<div class="book_price">
-						<span class="sp1">价格:</span>
-						<span class="sp2">￥30.00</span>
-					</div>
-					<div class="book_sales">
-						<span class="sp1">销量:</span>
-						<span class="sp2">230</span>
-					</div>
-					<div class="book_amount">
-						<span class="sp1">库存:</span>
-						<span class="sp2">1000</span>
-					</div>
-					<div class="book_add">
-						<button>加入购物车</button>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
+
 		</div>
-		
+
 		<div id="page_nav">
-			<a href="#">首页</a>
-			<a href="#">上一页</a>
-			<a href="#">3</a>
-			【4】
-			<a href="#">5</a>
-			<a href="#">下一页</a>
-			<a href="#">末页</a>
-			共10页，30条记录 到第<input value="4" name="pn" id="pn_input"/>页
-			<input type="button" value="确定">
+			<%--			大于 1 才显示--%>
+			<c:if test="${requestScope.page.pageNo > 1}">
+				<a href="client/bookServlet?action=page&pageNo=1">首页</a>
+				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageNo - 1}">上一页</a>
+			</c:if>
+
+			<%--	当前页码的前后页码 开始--%>
+			<%--	情况1--%>
+			<c:choose>
+				<c:when test="${requestScope.page.pageTotal <= 5 }">
+					<c:set var="begin" value="1"/>
+					<c:set var="end" value="${requestScope.page.pageTotal}"/>
+				</c:when>
+				<%--				情况2 总页码大于5--%>
+				<c:when test="${requestScope.page.pageTotal > 5 }">
+					<c:choose>
+						<%--					小情况1--%>
+						<c:when test="${requestScope.page.pageNo <= 3 }">
+							<c:set var="begin" value="1"/>
+							<c:set var="end" value="5"/>
+						</c:when>
+						<%--					小情况2--%>
+						<c:when test="${requestScope.page.pageNo > requestScope.page.pageTotal - 3 }">
+							<c:set var="begin" value="${requestScope.page.pageTotal - 4}"/>
+							<c:set var="end" value="${requestScope.page.pageTotal}"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="begin" value="${requestScope.page.pageNo - 2}"/>
+							<c:set var="end" value="${requestScope.page.pageNo + 2}"/>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+			</c:choose>
+
+			<c:forEach begin="${begin}" end="${end}" var="i">
+				<c:if test="${i == requestScope.page.pageNo}">
+					【${i}】
+				</c:if>
+				<c:if test="${i != requestScope.page.pageNo}">
+					<a href="client/bookServlet?action=page&pageNo=${i}">${i}</a>
+				</c:if>
+			</c:forEach>
+			<%--	当前页码的前后页码 结束--%>
+
+			<%--	小于末页才显示	--%>
+			<c:if test="${requestScope.page.pageNo < requestScope.page.pageTotal}">
+				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageNo + 1}">下一页</a>
+				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageTotal}">末页</a>
+			</c:if>
+
+			共${requestScope.page.pageTotal}页，${requestScope.page.pageTotalCount}条记录
+			到第<input value="${requestScope.page.pageNo}" name="pn" id="pn_input"/>页
+			<input id="searchPageBtn" type="button" value="确定">
+			<script type="text/javascript">
+				$(function () {
+					// 跳到指定页码
+					$("#searchPageBtn").click(function () {
+						let pageNo = $("#pn_input").val();
+
+						// location.href = "client/bookServlet?action=page&pageNo="+pageNo;
+
+						if(pageNo >= 1 && pageNo <= ${requestScope.page.pageTotal}){
+							// 如何跳转？，js提供了地址栏对象 location，可以取出地址栏中的地址
+							<%--location.href = "${requestScope.host}"--%>
+							location.href = "client/bookServlet?action=page&pageNo="+pageNo;
+						} else {
+							alert("跳转页码【" + pageNo + "】非法")
+							<%--return confirm("跳转页码【" + pageNo + "】非法，共【${requestScope.page.pageTotal}】页！！！");--%>
+						}
+
+					})
+				})
+			</script>
+
 		</div>
 	
 	</div>

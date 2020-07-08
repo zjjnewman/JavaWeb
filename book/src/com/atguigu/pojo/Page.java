@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Page <T> {
 
-    public final static Integer PAGE_SIZE = 2;
+    public final static Integer PAGE_SIZE = 4;
 
     /**
      * 当前页码
@@ -35,6 +35,8 @@ public class Page <T> {
      * 当前页数据
      */
     private List<T> items;
+    
+    private String url;
 
     public Page() {
     }
