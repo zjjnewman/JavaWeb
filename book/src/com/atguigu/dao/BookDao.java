@@ -43,7 +43,35 @@ public interface BookDao {
      */
     public List<Book> queryBooks();
 
+    /**
+     * 查询总记录数
+     * @return
+     */
     Integer queryPageTotalCount();
 
+    /**
+     * 查询 从begin 到begin+pageSize的记录，返回book对象的list
+     * @param begin
+     * @param pageSize
+     * @return
+     */
     List<Book> queryForPageItems(Integer begin, Integer pageSize);
+
+    /**
+     * 查询最大 最小价格区间的图书总记录
+     * @param min
+     * @param max
+     * @return
+     */
+    Integer queryPageTotalCountByPrice(Integer min, Integer max);
+
+    /**
+     * 查询价格区间的记录，返回book对象的list
+     * @param begin
+     * @param pageSize
+     * @param min
+     * @param max
+     * @return
+     */
+    List<Book> queryForPageItemsByPrice(Integer begin, Integer pageSize, Integer min, Integer max);
 }

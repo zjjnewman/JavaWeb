@@ -11,6 +11,7 @@ import java.util.Properties;
 public class JdbcUtils {
 
     private static DruidDataSource dataSource;
+    private static ThreadLocal<Connection> threadLocalConnContainer = new ThreadLocal<Connection>();
 
     static {
 
@@ -32,6 +33,68 @@ public class JdbcUtils {
         }
     }
 
+    /**
+     * 从 ThreadLocal<Connection> 中获取 关闭自动提交事务的 数据库连接对象，若为空，则从数据库连接池中获取，并放入ThreadLocal<Connection>
+     * @return 返回关闭自动提交事务的 数据库连接对象
+     */
+    public static Connection getConnection1(){
+        Connection connection = threadLocalConnContainer.get();
+        if(connection == null){
+            try {
+                connection = dataSource.getConnection();
+                threadLocalConnContainer.set(connection);
+                connection.setAutoCommit(false);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return connection;
+    }
+
+    public static void commitAndClose(){
+        Connection connection = threadLocalConnContainer.get();
+        if (connection != null){
+            try {
+                connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 为啥线程池技术就要移除？因为线程池名字是固定的几个，轮流运行不同功能的程序，
+        threadLocalConnContainer.remove();
+    }
+
+    public static void rollbackAndClose(){
+        Connection connection = threadLocalConnContainer.get();
+        if (connection != null){
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 为啥线程池技术就要移除？因为线程池名字是固定的几个，轮流运行不同功能的程序，
+        threadLocalConnContainer.remove();
+    }
+
+
+
+
+    //************************************************************************************************************
     /**
      * 获取数据库连接池中的连接
      */

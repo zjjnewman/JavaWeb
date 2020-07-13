@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
+
 public class UserServlet extends BaseServlet {
 
     UserService userService =  new UserServiceImpl();
@@ -33,10 +35,10 @@ public class UserServlet extends BaseServlet {
         String password = req.getParameter("password");
 
         // 2.
-        User user = userService.login(new User(null, username, password, null));
+        User loginUser = userService.login(new User(null, username, password, null));
 
         // 3.1
-        if(user == null){
+        if(loginUser == null){
             System.out.println("登录失败");
             // 把错误信息和回显的表单项信息，保存到request域中
             req.setAttribute("msg", "用户名或密码错误");
@@ -45,25 +47,59 @@ public class UserServlet extends BaseServlet {
             req.getRequestDispatcher("/pages/user/login.jsp").forward(req, resp);
         } else {//3.2
             System.out.println("登陆成功");
+
+            // 保存用户登录之后的信息到session域中
+            req.getSession().setAttribute("user", loginUser);
             req.getRequestDispatcher("/pages/user/login_success.jsp").forward(req, resp);
         }
     }
 
+    /**
+     * 注销用户
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // 销毁session
+        req.getSession().invalidate();
+        // 重定向到首页或登录页
+        System.out.println("reqContextPath = " + req.getContextPath());
+        resp.sendRedirect(req.getContextPath()+"");
+    }
+
 
     protected void regist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. 获取请求参数
+        // 获取session中的验证码
+        String token = (String) req.getSession().getAttribute(KAPTCHA_SESSION_KEY);
+        // 删除验证码
+        req.getSession().removeAttribute(KAPTCHA_SESSION_KEY);
 
+        // 1. 获取请求参数
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String code = req.getParameter("code");
 
         // 2. 检查验证码是否正确， 测试阶段固定为：abcde
-        String c = "abcde";
-        if(c.equalsIgnoreCase(code)){
+        if(token != null && token.equalsIgnoreCase(code)){
 
             // 3.检查用户名是否正确
             if(userService.existsUsername(username)){
+                System.out.println("req.getScheme() = " + req.getScheme());
+                System.out.println("req.getServerName() = " + req.getServerName());
+                System.out.println("req.getServerPort() = " + req.getServerPort());
+                System.out.println("req.getContextPath() = " + req.getContextPath());
+                String basePath = req.getScheme()
+                        + "://"
+                        + req.getServerName()
+                        + ":"
+                        + req.getServerPort()
+                        + req.getContextPath()
+                        + "/";
+                System.out.println("basePath = " + basePath);
+
 
                 //把回显信息保存在request域中
                 req.setAttribute("msg", "用户名已存在");

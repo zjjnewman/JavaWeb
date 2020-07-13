@@ -11,6 +11,12 @@
 		<script type="text/javascript">
 			// 页面加载完成之后
 			$(function () {
+				// 给验证码图片绑定单击事件
+				$("#code_img").click(function () {
+					this.src = "${basePath}kaptcha.jpg?"+new Date();
+				})
+
+
 				// 给注册绑定单击事件
 				$("#sub_btn").click(function () {
 					// 验证用户名：必须由字母，数字下划线组成，并且长度为5到12位
@@ -22,7 +28,6 @@
 					if (!usernamePatt.test(usernameText)) {
 						//4 提示用户结果
 						$("span.errorMsg").text("用户名不合法！");
-
 						return false;
 					}
 
@@ -148,14 +153,13 @@
 									<br />
 									<br />
 									<label>验证码：</label>
-									<input class="itxt" type="text" name="code" style="width: 150px;" id="code"
-										   value="abcde"/>
+									<input class="itxt" type="text" name="code" style="width: 80px;" id="code"/>
 <%--										   value="<%=request.getAttribute("code")==null?"":request.getAttribute("code")%>"/>--%>
-
-									<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">
+									<img id="code_img" alt="" src="kaptcha.jpg" style="float: right; margin-right: 40px; width: 155px;">
 									<br />
 									<br />
 									<input type="submit" value="注册" id="sub_btn" />
+									<a href="pages/user/login.jsp">登录</a> |
 								</form>
 							</div>
 

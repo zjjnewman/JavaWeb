@@ -3,6 +3,7 @@ package com.atguigu.test;
 import com.atguigu.dao.BookDao;
 import com.atguigu.dao.impl.BookDaoImpl;
 import com.atguigu.pojo.Book;
+import com.atguigu.pojo.Page;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -48,6 +49,16 @@ class BookDaoTest {
     @Test
     void queryForPageItems() {
         bookDao.queryForPageItems(11, 5).forEach(System.out::println);
+    }
+
+    @Test
+    void queryPageTotalCountByPrice() {
+        System.out.println(bookDao.queryPageTotalCountByPrice(10, 50));
+    }
+
+    @Test
+    void queryForPageItemsByPrice() {
+        bookDao.queryForPageItemsByPrice(0, Page.PAGE_SIZE, 10, 50).forEach(System.out::println);
     }
 
 }

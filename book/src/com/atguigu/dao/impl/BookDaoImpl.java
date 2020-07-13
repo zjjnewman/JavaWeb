@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BookDaoImpl extends BaseDao implements BookDao {
     /**
-     * 添加
+     * 添加一本图书
      *
      * @param book
      * @return
@@ -21,7 +21,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     /**
-     * 删除
+     * 删除某个id的书
      *
      * @param id
      * @return
@@ -34,7 +34,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     /**
-     * 修改
+     * 修改某个id的图书
      *
      * @param book
      * @return
@@ -46,7 +46,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     /**
-     * 查询
+     * 查询某个id的书
      *
      * @param id
      * @return
@@ -58,7 +58,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     /**
-     * 查询
+     * 查询所有的书，返回book对象list
      *
      * @return
      */
@@ -68,6 +68,10 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         return queryForList(Book.class, sql);
     }
 
+    /**
+     * 查询总共多少页
+     * @return
+     */
     @Override
     public Integer queryPageTotalCount() {
         String sql = "select count(*) from t_book";
@@ -76,9 +80,47 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         return count.intValue();
     }
 
+    /**
+     * 每页记录，返回book对象的列表
+     * @param begin
+     * @param pageSize
+     * @return
+     */
     @Override
     public List<Book> queryForPageItems(Integer begin, Integer pageSize) {
         String sql = "select `id`, `name`, `author`, `price`, `sales`, `stock`, `img_path` imgPath from t_book limit ?, ?";
         return queryForList(Book.class, sql, begin, pageSize);
     }
+
+    /**
+     * 查询最大 最小价格区间的图书总记录
+     *
+     * @param min
+     * @param max
+     * @return
+     */
+    @Override
+    public Integer queryPageTotalCountByPrice(Integer min, Integer max) {
+        String sql = "select count(*) from t_book where price between ? and ?";
+        Number count = (Number) queryForSingleValue(sql, min, max);
+        return count.intValue();
+    }
+
+    /**
+     * 查询价格区间的记录，返回book对象的list
+     *
+     * @param begin
+     * @param pageSize
+     * @param min
+     * @param max
+     * @return
+     */
+    @Override
+    public List<Book> queryForPageItemsByPrice(Integer begin, Integer pageSize, Integer min, Integer max) {
+        String sql = "select `id`, `name`, `author`, `price`, `sales`, `stock`, `img_path` imgPath from t_book " +
+                "where price between ? and ? order by price limit ?, ?";
+        return queryForList(Book.class, sql, min, max, begin, pageSize);
+    }
+
+
 }

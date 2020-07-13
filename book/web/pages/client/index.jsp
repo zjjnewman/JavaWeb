@@ -7,6 +7,17 @@
 <title>书城首页</title>
 	<%-- 静态保函base标签页、css样式、jQuery文件，公共头，jsp静态包含--%>
 	<%@include file="/pages/common/head.jsp"%>
+
+<%--	点击事件 加入购物车--%>
+	<script type="text/javascript">
+		$(function () {
+			$("button.addToCart").click(function () {
+				let bookId = $(this).attr("bookId");
+				location.href = "${basePath}cartServlet?action=addItem&id=" + bookId;
+			});
+		})
+	</script>
+
 </head>
 <body>
 	
@@ -14,26 +25,49 @@
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
 			<span class="wel_word">网上书城</span>
 			<div>
-				<a href="pages/user/login.jsp">登录</a> |
-				<a href="pages/user/regist.jsp">注册</a> &nbsp;&nbsp;
-				<a href="pages/cart/cart.jsp">购物车</a>
-				<a href="pages/manager/manager.jsp">后台管理</a>
+				<c:if test="${empty sessionScope.user}">
+					<a href="pages/user/login.jsp">登录</a>
+					<a href="pages/user/regist.jsp">注册</a>
+					<a href="pages/cart/cart.jsp">购物车</a>
+					<a href="pages/manager/manager.jsp">后台管理</a>
+				</c:if>
+
+				<c:if test="${not empty sessionScope.user}">
+					<span>欢迎<span class="um_span">${sessionScope.user.username}</span>光临尚硅谷书城</span>
+					<a href="pages/order/order.jsp">我的订单</a>
+					<a href="userServlet?action=logout">注销</a>
+					<a href="pages/cart/cart.jsp">购物车</a>
+					<a href="pages/manager/manager.jsp">后台管理</a>
+				</c:if>
+
 			</div>
 	</div>
 	<div id="main">
 		<div id="book">
 			<div class="book_cond">
-				<form action="" method="get">
-					价格：<input id="min" type="text" name="min" value=""> 元 - 
-						<input id="max" type="text" name="max" value=""> 元 
+				<form action="client/bookServlet" method="get">
+					<input type="hidden" name="action" value="pageByPrice">
+					价格：<input id="min" type="text" name="min" value="${param.min}"> 元 -
+						<input id="max" type="text" name="max" value="${param.max}"> 元
 						<input type="submit" value="查询" />
 				</form>
 			</div>
 			<div style="text-align: center">
-				<span>您的购物车中有3件商品</span>
-				<div>
-					您刚刚将<span style="color: red">时间简史</span>加入到了购物车中
-				</div>
+				<c:if test="${not empty sessionScope.cart.items}">
+					<span>您的购物车中有${sessionScope.cart.totalCount}件商品</span>
+					<div>
+						您刚刚将<span style="color: red">${sessionScope.lastName}</span>加入到了购物车中
+					</div>
+				</c:if>
+
+				<c:if test="${empty sessionScope.cart.items}">
+					<span></span>
+					<div>
+						<span style="color: red">您当前购物车为空！</span>
+					</div>
+				</c:if>
+
+
 			</div>
 
 <%--			对图书列表遍历--%>
@@ -64,7 +98,7 @@
 							<span class="sp2">${book.stock}</span>
 						</div>
 						<div class="book_add">
-							<button>加入购物车</button>
+							<button bookId="${book.id}" class="addToCart">加入购物车</button>
 						</div>
 					</div>
 				</div>
@@ -72,82 +106,9 @@
 
 		</div>
 
-		<div id="page_nav">
-			<%--			大于 1 才显示--%>
-			<c:if test="${requestScope.page.pageNo > 1}">
-				<a href="client/bookServlet?action=page&pageNo=1">首页</a>
-				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageNo - 1}">上一页</a>
-			</c:if>
-
-			<%--	当前页码的前后页码 开始--%>
-			<%--	情况1--%>
-			<c:choose>
-				<c:when test="${requestScope.page.pageTotal <= 5 }">
-					<c:set var="begin" value="1"/>
-					<c:set var="end" value="${requestScope.page.pageTotal}"/>
-				</c:when>
-				<%--				情况2 总页码大于5--%>
-				<c:when test="${requestScope.page.pageTotal > 5 }">
-					<c:choose>
-						<%--					小情况1--%>
-						<c:when test="${requestScope.page.pageNo <= 3 }">
-							<c:set var="begin" value="1"/>
-							<c:set var="end" value="5"/>
-						</c:when>
-						<%--					小情况2--%>
-						<c:when test="${requestScope.page.pageNo > requestScope.page.pageTotal - 3 }">
-							<c:set var="begin" value="${requestScope.page.pageTotal - 4}"/>
-							<c:set var="end" value="${requestScope.page.pageTotal}"/>
-						</c:when>
-						<c:otherwise>
-							<c:set var="begin" value="${requestScope.page.pageNo - 2}"/>
-							<c:set var="end" value="${requestScope.page.pageNo + 2}"/>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-			</c:choose>
-
-			<c:forEach begin="${begin}" end="${end}" var="i">
-				<c:if test="${i == requestScope.page.pageNo}">
-					【${i}】
-				</c:if>
-				<c:if test="${i != requestScope.page.pageNo}">
-					<a href="client/bookServlet?action=page&pageNo=${i}">${i}</a>
-				</c:if>
-			</c:forEach>
-			<%--	当前页码的前后页码 结束--%>
-
-			<%--	小于末页才显示	--%>
-			<c:if test="${requestScope.page.pageNo < requestScope.page.pageTotal}">
-				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageNo + 1}">下一页</a>
-				<a href="client/bookServlet?action=page&pageNo=${requestScope.page.pageTotal}">末页</a>
-			</c:if>
-
-			共${requestScope.page.pageTotal}页，${requestScope.page.pageTotalCount}条记录
-			到第<input value="${requestScope.page.pageNo}" name="pn" id="pn_input"/>页
-			<input id="searchPageBtn" type="button" value="确定">
-			<script type="text/javascript">
-				$(function () {
-					// 跳到指定页码
-					$("#searchPageBtn").click(function () {
-						let pageNo = $("#pn_input").val();
-
-						// location.href = "client/bookServlet?action=page&pageNo="+pageNo;
-
-						if(pageNo >= 1 && pageNo <= ${requestScope.page.pageTotal}){
-							// 如何跳转？，js提供了地址栏对象 location，可以取出地址栏中的地址
-							<%--location.href = "${requestScope.host}"--%>
-							location.href = "client/bookServlet?action=page&pageNo="+pageNo;
-						} else {
-							alert("跳转页码【" + pageNo + "】非法")
-							<%--return confirm("跳转页码【" + pageNo + "】非法，共【${requestScope.page.pageTotal}】页！！！");--%>
-						}
-
-					})
-				})
-			</script>
-
-		</div>
+		<%--分页条的开始--%>
+		<%@include file="/pages/common/page_nav.jsp"%>
+		<%--分页条的结束--%>
 	
 	</div>
 <%-- 页脚静态包含 --%>

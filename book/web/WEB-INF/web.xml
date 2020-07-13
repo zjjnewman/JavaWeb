@@ -51,5 +51,51 @@
         <url-pattern>/client/bookServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>cartServlet</servlet-name>
+        <servlet-class>com.atguigu.web.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cartServlet</servlet-name>
+        <url-pattern>/cartServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>orderServlet</servlet-name>
+        <servlet-class>com.atguigu.web.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>orderServlet</servlet-name>
+        <url-pattern>/orderServlet</url-pattern>
+    </servlet-mapping>
+
+
+
+<!--    filter过滤器配置-->
+    <filter>
+        <filter-name>ManagerFilter</filter-name>
+        <filter-class>com.atguigu.filter.ManagerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ManagerFilter</filter-name>
+<!--        单纯配置这个路径无法拦截手动输入的地址：
+            http://localhost:8080/book/manager/bookServlet?action=page&pageNo=6
+            所以要追加拦截地址 /manager/bookServlet-->
+        <url-pattern>/pages/manager/*</url-pattern>
+        <url-pattern>/manager/bookServlet</url-pattern>
+    </filter-mapping>
+
+
+
+
+<!--    谷歌验证码jar包-->
+    <servlet>
+        <servlet-name>kaptchaServlet</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>kaptchaServlet</servlet-name>
+        <url-pattern>/kaptcha.jpg</url-pattern>
+    </servlet-mapping>
 
 </web-app>
