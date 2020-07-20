@@ -50,7 +50,14 @@ public class UserServlet extends BaseServlet {
 
             // 保存用户登录之后的信息到session域中
             req.getSession().setAttribute("user", loginUser);
-            req.getRequestDispatcher("/pages/user/login_success.jsp").forward(req, resp);
+
+            // 拼接url，把sessionId放入
+            String url = resp.encodeRedirectURL("/pages/user/login_success.jsp");
+
+            System.out.println("登录 ：拼接sessionId后的url：" + url);
+
+            req.getRequestDispatcher(url).forward(req, resp);
+//            req.getRequestDispatcher("/pages/user/login_success.jsp").forward(req, resp);
         }
     }
 

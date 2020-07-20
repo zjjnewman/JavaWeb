@@ -18,7 +18,6 @@ public class test {
 
     @Test
     public void test(){
-
         Object o = 1;
         System.out.println((Integer) o);
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.List;
 
 public class BookServlet extends BaseServlet {
@@ -30,7 +31,18 @@ public class BookServlet extends BaseServlet {
         // 转发请求到图书管理列表页面
         // 注意一个bug---表单重复提交
         //req.getRequestDispatcher("/manager/bookServlet?action=list").forward(req, resp);
-        resp.sendRedirect(req.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo);
+
+        /**
+         * 以下是当客户端 cookie 被禁用时，对重定向url的处理
+         * 可通过下面的方式，把sessionID拼接在url后面
+         */
+        String url = resp.encodeRedirectURL(req.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo);
+
+        System.out.println("拼接sessionId后的url：" + url);
+
+        resp.sendRedirect(url);
+
+        //resp.sendRedirect(req.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo);
 
     }
 

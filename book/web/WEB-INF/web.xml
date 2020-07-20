@@ -85,8 +85,31 @@
         <url-pattern>/manager/bookServlet</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>TransactionFilter</filter-name>
+        <filter-class>com.atguigu.filter.TransactionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TransactionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
+    
+    
+    
+<!--    配置错误页面-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/error/erorr500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/error/erorr404.jsp</location>
+    </error-page>
+    
+    
+    
 
 <!--    谷歌验证码jar包-->
     <servlet>

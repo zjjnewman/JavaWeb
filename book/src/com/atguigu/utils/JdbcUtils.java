@@ -37,7 +37,7 @@ public class JdbcUtils {
      * 从 ThreadLocal<Connection> 中获取 关闭自动提交事务的 数据库连接对象，若为空，则从数据库连接池中获取，并放入ThreadLocal<Connection>
      * @return 返回关闭自动提交事务的 数据库连接对象
      */
-    public static Connection getConnection1(){
+    public static Connection getConnection(){
         Connection connection = threadLocalConnContainer.get();
         if(connection == null){
             try {
@@ -94,11 +94,12 @@ public class JdbcUtils {
 
 
 
+    // 分界线上面是加了事务后的工具，结合 ThreadLocal、事务
     //************************************************************************************************************
     /**
      * 获取数据库连接池中的连接
      */
-    public static Connection getConnection(){
+    public static Connection getConnection1(){
         Connection conn = null;
 
         try {
@@ -124,8 +125,6 @@ public class JdbcUtils {
 
         }
     }
-
-
 
 
 }

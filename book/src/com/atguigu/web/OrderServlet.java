@@ -6,6 +6,7 @@ import com.atguigu.pojo.Cart;
 import com.atguigu.pojo.User;
 import com.atguigu.service.OrderService;
 import com.atguigu.service.impl.OrderServiceImpl;
+import com.atguigu.utils.JdbcUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,8 @@ public class OrderServlet extends BaseServlet {
         }
 
         // 生成订单号，并保存到req的域中
-        String orderId = orderService.createOrder(cart, loginUser.getId());
+        String orderId = orderId = orderService.createOrder(cart, loginUser.getId());
+
         req.getSession().setAttribute("orderId", orderId);
 
         // 请求转发到 结算页面 pages/cart/checkout.jsp，为了防止表单重复提交，应该用重定向，req域失效，把orderId保存到session中

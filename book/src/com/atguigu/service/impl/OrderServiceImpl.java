@@ -8,6 +8,7 @@ import com.atguigu.dao.impl.OrderDaoImpl;
 import com.atguigu.dao.impl.OrderItemDaoImpl;
 import com.atguigu.pojo.*;
 import com.atguigu.service.OrderService;
+import sun.tools.tree.ThisExpression;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -30,9 +31,10 @@ public class OrderServiceImpl implements OrderService {
         // 保存订单
         Order order = new Order(orderId, new Timestamp(System.currentTimeMillis()), cart.getTotalPrice(), 0, userId);
 
-        // 以下应该做成事务
-
+        // 以下应该做成事务------在Servlet层已经做了 数据库事务
         orderDao.saveOrder(order);
+
+        System.out.println(1/0);
 
         // 获取购物车中每一个商品项，然后保存到 orderItem
         for(Map.Entry<Integer, CartItem> entry : cart.getItems().entrySet()){
