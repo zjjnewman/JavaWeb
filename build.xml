@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="javaweb" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.jar"/>
+    <include name="*.klib"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.book_lib.classpath">
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/commons-beanutils-1.9.4.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/commons-collections-3.2.2.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/commons-dbutils-1.7.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/druid-1.1.23.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/kaptcha-2.3.2.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/mysql-connector-java-8.0.19.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
+    <pathelement location="${basedir}/book/web/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <path id="library.tomcat_8.5.55.classpath">
+    <pathelement location="/Users/jin/workspace/java/apache-tomcat-8.5.55/lib/jsp-api.jar"/>
+    <pathelement location="/Users/jin/workspace/java/apache-tomcat-8.5.55/lib/servlet-api.jar"/>
+  </path>
+  
+  <!-- Modules -->
+
+  <!-- Module book -->
+  
+  <dirname property="module.book.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.book" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="book.output.dir" value="${module.book.basedir}/out/production/book"/>
+  <property name="book.testoutput.dir" value="${module.book.basedir}/out/test/book"/>
+  
+  <path id="book.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="book.module.production.classpath">
+    <path refid="library.tomcat_8.5.55.classpath"/>
+    <path refid="library.book_lib.classpath"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+  </path>
+  
+  <path id="book.runtime.production.module.classpath">
+    <pathelement location="${book.output.dir}"/>
+    <path refid="library.book_lib.classpath"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+  </path>
+  
+  <path id="book.module.classpath">
+    <pathelement location="${book.output.dir}"/>
+    <path refid="library.tomcat_8.5.55.classpath"/>
+    <path refid="library.book_lib.classpath"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+  </path>
+  
+  <path id="book.runtime.module.classpath">
+    <pathelement location="${book.testoutput.dir}"/>
+    <pathelement location="${book.output.dir}"/>
+    <path refid="library.tomcat_8.5.55.classpath"/>
+    <path refid="library.book_lib.classpath"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${basedir}/lib/opentest4j-1.1.1.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.book">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.book">
+    <patternset refid="excluded.from.module.book"/>
+  </patternset>
+  
+  <path id="book.module.sourcepath">
+    <dirset dir="${module.book.basedir}/book">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.book" depends="compile.module.book.production,compile.module.book.tests" description="Compile module book"/>
+  
+  <target name="compile.module.book.production" description="Compile module book; production classes">
+    <mkdir dir="${book.output.dir}"/>
+    <javac destdir="${book.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.book}"/>
+      <bootclasspath refid="book.module.bootclasspath"/>
+      <classpath refid="book.module.production.classpath"/>
+      <src refid="book.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.book"/>
+    </javac>
+    
+    <copy todir="${book.output.dir}">
+      <fileset dir="${module.book.basedir}/book/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.book.tests" depends="compile.module.book.production" description="compile module book; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.book" description="cleanup module">
+    <delete dir="${book.output.dir}"/>
+    <delete dir="${book.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module JavaWeb -->
+  
+  <dirname property="module.javaweb.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.javaweb" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="javaweb.output.dir" value="${module.javaweb.basedir}/out/production/JavaWeb"/>
+  <property name="javaweb.testoutput.dir" value="${module.javaweb.basedir}/out/test/JavaWeb"/>
+  
+  <path id="javaweb.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="javaweb.module.production.classpath"/>
+  
+  <path id="javaweb.runtime.production.module.classpath">
+    <pathelement location="${javaweb.output.dir}"/>
+  </path>
+  
+  <path id="javaweb.module.classpath">
+    <pathelement location="${javaweb.output.dir}"/>
+  </path>
+  
+  <path id="javaweb.runtime.module.classpath">
+    <pathelement location="${javaweb.testoutput.dir}"/>
+    <pathelement location="${javaweb.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.javaweb">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.javaweb">
+    <patternset refid="excluded.from.module.javaweb"/>
+  </patternset>
+  
+  
+  <target name="compile.module.javaweb" depends="compile.module.javaweb.production,compile.module.javaweb.tests" description="Compile module JavaWeb"/>
+  
+  <target name="compile.module.javaweb.production" description="Compile module JavaWeb; production classes"/>
+  
+  <target name="compile.module.javaweb.tests" depends="compile.module.javaweb.production" description="compile module JavaWeb; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.javaweb" description="cleanup module">
+    <delete dir="${javaweb.output.dir}"/>
+    <delete dir="${javaweb.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+
+  <target name="clean" depends="clean.module.book, clean.module.javaweb, clean.artifact.book:war_exploded" description="cleanup all"/>
+
+  <target name="build.modules" depends="init, clean, compile.module.book, compile.module.javaweb" description="build all modules"/>
+
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.book:war_exploded" value="${basedir}/out/artifacts/book_war_exploded"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="clean.artifact.book:war_exploded" description="clean book:war exploded artifact output">
+    <delete dir="${artifact.output.book:war_exploded}"/>
+  </target>
+  
+  <target name="artifact.book:war_exploded" depends="init.artifacts, compile.module.book" description="Build &#39;book:war exploded&#39; artifact">
+    <mkdir dir="${artifact.output.book:war_exploded}"/>
+    <copy todir="${artifact.output.book:war_exploded}">
+      <fileset dir="${basedir}/book/web"/>
+    </copy>
+    <mkdir dir="${artifact.output.book:war_exploded}/WEB-INF"/>
+    <copy file="${basedir}/book/web/WEB-INF/web.xml" tofile="${artifact.output.book:war_exploded}/WEB-INF/web.xml"/>
+    <mkdir dir="${artifact.output.book:war_exploded}/WEB-INF"/>
+    <mkdir dir="${artifact.output.book:war_exploded}/WEB-INF/classes"/>
+    <copy todir="${artifact.output.book:war_exploded}/WEB-INF/classes">
+      <fileset dir="${book.output.dir}"/>
+    </copy>
+    <mkdir dir="${artifact.output.book:war_exploded}/WEB-INF/lib"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/druid-1.1.23.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/druid-1.1.23.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/commons-dbutils-1.7.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/commons-dbutils-1.7.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/commons-beanutils-1.9.4.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/commons-beanutils-1.9.4.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/commons-logging-1.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/commons-logging-1.2.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/commons-collections-3.2.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/commons-collections-3.2.2.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/kaptcha-2.3.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/kaptcha-2.3.2.jar"/>
+    <copy file="${basedir}/book/web/WEB-INF/lib/mysql-connector-java-8.0.19.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/mysql-connector-java-8.0.19.jar"/>
+    <copy file="${basedir}/lib/junit-jupiter-5.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-jupiter-5.4.2.jar"/>
+    <copy file="${basedir}/lib/junit-jupiter-api-5.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-jupiter-api-5.4.2.jar"/>
+    <copy file="${basedir}/lib/apiguardian-api-1.0.0.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/apiguardian-api-1.0.0.jar"/>
+    <copy file="${basedir}/lib/opentest4j-1.1.1.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/opentest4j-1.1.1.jar"/>
+    <copy file="${basedir}/lib/junit-platform-commons-1.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-platform-commons-1.4.2.jar"/>
+    <copy file="${basedir}/lib/junit-jupiter-params-5.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-jupiter-params-5.4.2.jar"/>
+    <copy file="${basedir}/lib/junit-jupiter-engine-5.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-jupiter-engine-5.4.2.jar"/>
+    <copy file="${basedir}/lib/junit-platform-engine-1.4.2.jar" tofile="${artifact.output.book:war_exploded}/WEB-INF/lib/junit-platform-engine-1.4.2.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.book:war_exploded" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
